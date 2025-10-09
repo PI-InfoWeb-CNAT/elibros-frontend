@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import AdminProtectedRoute from '@';
+import AdminProtectedRoute from '@/components/AdminProtectedRoute';
 import AdminLayout from '@/components/AdminLayout';
 import { useCategorias } from '@/hooks/useCategorias';
 import { categoriaApi } from '@/services/categoriaApiService';
