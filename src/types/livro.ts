@@ -1,7 +1,3 @@
-import { Autor } from './autor';
-import { Categoria } from './categoria';
-import { GeneroLiterario } from './generoLiterario';
-
 export interface Livro {
   id: number;
   titulo: string;

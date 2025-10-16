@@ -269,7 +269,7 @@ export default function CuponsAdminPage() {
     cupons, 
     loading, 
     error, 
-    totalCount,
+    // totalCount,
     refreshCupons,
     deleteCupom
   } = useCupons({

@@ -71,7 +71,7 @@ function PedidoModal({ isOpen, onClose, pedido, onSuccess, onUpdateStatus, mode 
 
   if (!isOpen || !pedido) return null;
 
-  const nextStatuses = pedidoApi.getNextStatuses(pedido.status);
+  // const nextStatuses = pedidoApi.getNextStatuses(pedido.status);
   const canEdit = pedidoApi.canEditStatus(pedido.status);
   const isEditMode = mode === 'edit' && canEdit;
 
@@ -281,7 +281,7 @@ export default function PedidosAdminPage() {
     pedidos, 
     loading, 
     error, 
-    totalCount,
+    // totalCount,
     refreshPedidos,
     updateStatus,
     cancelPedido

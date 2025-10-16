@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { clienteApi } from '@/services/clienteApiService';
-import { Cliente, ClienteListResponse } from '@/types/cliente';
+import { Cliente } from '@/types/cliente';
 
 interface UseClientesOptions {
   search?: string;
@@ -73,7 +73,7 @@ export function useClientes(options: UseClientesOptions = {}) {
     }
   };
 
-  const updateCliente = async (id: number, data: any) => {
+  const updateCliente = async (id: number, data: FormData | Record<string, unknown>) => {
     try {
       await clienteApi.update(id, data);
       await fetchClientes(); // Recarregar a lista

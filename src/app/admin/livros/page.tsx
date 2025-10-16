@@ -8,7 +8,7 @@ import { livroApi } from '@/services';
 import { autorApi } from '@/services/autorApiService';
 import { categoriaApi } from '@/services/categoriaApiService';
 import { generoApi } from '@/services/generoApiService';
-import { Livro, Autor, Categoria, GeneroLiterario } from '@/types';
+import { Livro, Autor, Categoria, GeneroLiterario, LivroCreateData } from '@/types';
 import { elibrosApi } from '../../../services/api';
 import { useRouter } from 'next/navigation';
 
@@ -278,13 +278,13 @@ function LivroModal({ isOpen, onClose, livro, onSuccess }: LivroModalProps) {
   };
  
   // Extrair IDs baseado nos nomes (StringRelatedField do Django)
-  const extractIdsFromNames = (names: string[], sourceList: any[]): number[] => {
+  const extractIdsFromNames = (names: string[], sourceList: Array<{ id: number; nome: string }>): number[] => {
     if (!Array.isArray(names) || !Array.isArray(sourceList)) return [];
     
     return names.map(name => {
       const found = sourceList.find(item => item.nome === name);
       return found ? found.id : null;
-    }).filter(id => id !== null) as number[];
+    }).filter((id): id is number => id !== null);
   };
     
       // DEBUG: Verificar o que está chegando no livro
@@ -441,7 +441,7 @@ function LivroModal({ isOpen, onClose, livro, onSuccess }: LivroModalProps) {
       }
     } else {
       // Usar JSON quando não há arquivo
-      const dataToSend: any = {
+      const dataToSend: LivroCreateData = {
         titulo: formData.titulo,
         subtitulo: formData.subtitulo || undefined,
         sinopse: formData.sinopse || undefined,
@@ -823,7 +823,7 @@ function LivroModal({ isOpen, onClose, livro, onSuccess }: LivroModalProps) {
                         </div>
                       ) : autores.length > 0 ? (
                         <p className="text-sm text-gray-500 text-center py-4">
-                          Nenhum autor encontrado com "{searchAutor}"
+                          Nenhum autor encontrado com &quot;{searchAutor}&quot;
                         </p>
                       ) : (
                         <p className="text-sm text-gray-500 text-center py-4">
@@ -924,7 +924,7 @@ function LivroModal({ isOpen, onClose, livro, onSuccess }: LivroModalProps) {
                         </div>
                       ) : categorias.length > 0 ? (
                         <p className="text-sm text-gray-500 text-center py-4">
-                          Nenhuma categoria encontrada com "{searchCategoria}"
+                          Nenhuma categoria encontrada com &quot;{searchCategoria}&quot;
                         </p>
                       ) : (
                         <p className="text-sm text-gray-500 text-center py-4">
@@ -1025,7 +1025,7 @@ function LivroModal({ isOpen, onClose, livro, onSuccess }: LivroModalProps) {
                         </div>
                       ) : generos.length > 0 ? (
                         <p className="text-sm text-gray-500 text-center py-4">
-                          Nenhum gênero encontrado com "{searchGenero}"
+                          Nenhum gênero encontrado com &quot;{searchGenero}&quot;
                         </p>
                       ) : (
                         <p className="text-sm text-gray-500 text-center py-4">
@@ -1220,7 +1220,7 @@ function useAutores() {
       for (const endpoint of endpoints) {
         try {
           console.log(`🔄 Tentando endpoint: ${endpoint}`);
-          data = await elibrosApi.makeRequest<any>(endpoint, { skipAuth: true });
+          data = await elibrosApi.makeRequest<{ results?: Autor[] } | Autor[]>(endpoint, { skipAuth: true });
           
           // Verifica se os dados são válidos
           if (data && Array.isArray(data)) {
@@ -1286,7 +1286,7 @@ function useCategorias() {
       for (const endpoint of endpoints) {
         try {
           console.log(`🔄 Tentando endpoint: ${endpoint}`);
-          data = await elibrosApi.makeRequest<any>(endpoint, { skipAuth: true });
+          data = await elibrosApi.makeRequest<{ results?: Categoria[] } | Categoria[]>(endpoint, { skipAuth: true });
           
           // Verifica se os dados são válidos
           if (data && Array.isArray(data)) {
@@ -1352,7 +1352,7 @@ function useGeneros() {
       for (const endpoint of endpoints) {
         try {
           console.log(`🔄 Tentando endpoint: ${endpoint}`);
-          data = await elibrosApi.makeRequest<any>(endpoint, { skipAuth: true });
+          data = await elibrosApi.makeRequest<{ results?: GeneroLiterario[] } | GeneroLiterario[]>(endpoint, { skipAuth: true });
           
           // Verifica se os dados são válidos
           if (data && Array.isArray(data)) {
@@ -1448,7 +1448,7 @@ export default function LivrosAdminPage() {
     livros, 
     loading, 
     error, 
-    totalCount,
+    // totalCount,
     refreshLivros,
     deleteLivro
   } = useLivros({

@@ -7,7 +7,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 
 export default function AdminHeader() {
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 

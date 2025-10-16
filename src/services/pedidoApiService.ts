@@ -286,7 +286,7 @@ class PedidoApiService {
         hour: '2-digit',
         minute: '2-digit'
       });
-    } catch (error) {
+    } catch {
       return 'Data inválida';
     }
   }
@@ -303,7 +303,7 @@ class PedidoApiService {
       }
       
       return date.toLocaleDateString('pt-BR');
-    } catch (error) {
+    } catch {
       return 'Data inválida';
     }
   }
