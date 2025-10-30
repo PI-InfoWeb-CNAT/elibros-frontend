@@ -3,6 +3,13 @@ import type { NextConfig } from "next";
 // Configuração dinâmica para Codespaces
 const getImageConfig = () => {
   const patterns = [
+    // ImageKit.io - Serviço de hospedagem de imagens
+    {
+      protocol: 'https' as const,
+      hostname: 'ik.imagekit.io',
+      port: '',
+      pathname: '/**',
+    },
     // Configuração para desenvolvimento local
     {
       protocol: 'http' as const,
