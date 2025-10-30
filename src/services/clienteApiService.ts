@@ -10,6 +10,22 @@ import {
 // Configuração para URLs de media
 const MEDIA_BASE_URL = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1').replace('/api/v1', '');
 
+// Interface para dados brutos vindos do backend
+interface RawClienteData {
+  id: number;
+  nome: string;
+  email: string;
+  username: string;
+  cpf?: string;
+  telefone?: string;
+  data_nascimento?: string;
+  genero?: string;
+  data_cadastro: string;
+  is_active: boolean;
+  foto_de_perfil?: string;
+  endereco?: Cliente['endereco'];
+}
+
 // import { Usuario } from '@/types/usuario';
 
 class ClienteApiService {
@@ -33,41 +49,41 @@ class ClienteApiService {
   }
 
   // Função auxiliar para mapear dados do backend para a interface Cliente
-  private mapClienteData(clienteData: any): Cliente {
+  private mapClienteData(clienteData: RawClienteData): Cliente {
     // Debug temporário
     console.log('🐛 Raw foto_de_perfil:', clienteData.foto_de_perfil);
     console.log('🐛 MEDIA_BASE_URL:', MEDIA_BASE_URL);
-    console.log('🐛 Built image URL:', this.buildImageUrl(clienteData.foto_de_perfil));
+    console.log('🐛 Built image URL:', this.buildImageUrl(clienteData.foto_de_perfil as string));
     
     return {
-      id: clienteData.id,
-      nome: clienteData.nome,
-      email: clienteData.email,
-      username: clienteData.username,
-      cpf: clienteData.cpf,
-      telefone: clienteData.telefone,
-      data_nascimento: clienteData.data_nascimento,
-      genero: clienteData.genero,
-      data_cadastro: clienteData.data_cadastro,
-      is_active: clienteData.is_active,
-      foto_de_perfil: this.buildImageUrl(clienteData.foto_de_perfil),
-      endereco: clienteData.endereco,
+      id: clienteData.id as number,
+      nome: clienteData.nome as string,
+      email: clienteData.email as string,
+      username: clienteData.username as string,
+      cpf: clienteData.cpf as string,
+      telefone: clienteData.telefone as string,
+      data_nascimento: clienteData.data_nascimento as string,
+      genero: clienteData.genero as string,
+      data_cadastro: clienteData.data_cadastro as string,
+      is_active: clienteData.is_active as boolean,
+      foto_de_perfil: this.buildImageUrl(clienteData.foto_de_perfil as string),
+      endereco: clienteData.endereco as Cliente['endereco'],
       // Mantendo compatibilidade com estrutura antiga
       user: {
-        id: clienteData.id,
-        email: clienteData.email,
-        username: clienteData.username,
-        nome: clienteData.nome,
+        id: clienteData.id as number,
+        email: clienteData.email as string,
+        username: clienteData.username as string,
+        nome: clienteData.nome as string,
         CPF: clienteData.cpf || '',
         telefone: clienteData.telefone || '',
-        genero: clienteData.genero as any || 'NI',
+        genero: (clienteData.genero as 'F' | 'M' | 'NB' | 'PND' | 'NI') || 'NI',
         dt_nasc: clienteData.data_nascimento,
         date_joined: clienteData.data_cadastro,
         is_active: clienteData.is_active,
         email_is_verified: true, // Assumindo verificado
         is_staff: false,
         is_superuser: false,
-        foto_de_perfil: this.buildImageUrl(clienteData.foto_de_perfil),
+        foto_de_perfil: this.buildImageUrl(clienteData.foto_de_perfil || null),
       }
     };
   }
@@ -79,7 +95,7 @@ class ClienteApiService {
     page?: number;
   }): Promise<ClienteListResponse> {
     // Para admin, usar o endpoint administrativo
-    const clientesData = await elibrosApi.makeRequest<any[]>('/admin/clientes/');
+    const clientesData = await elibrosApi.makeRequest<RawClienteData[]>('/admin/clientes/');
     
     // Mapear dados para a estrutura esperada pelo frontend
     const clientes: Cliente[] = clientesData.map(clienteData => this.mapClienteData(clienteData));
@@ -145,7 +161,7 @@ class ClienteApiService {
   }
 
   async get(id: number): Promise<Cliente> {
-    const clienteData = await elibrosApi.makeRequest<any>(`/admin/${id}/get_cliente/`);
+    const clienteData = await elibrosApi.makeRequest<RawClienteData>(`/admin/${id}/get_cliente/`);
     return this.mapClienteData(clienteData);
   }
 
@@ -182,7 +198,7 @@ class ClienteApiService {
       options.body = JSON.stringify(data);
     }
 
-    const clienteData = await elibrosApi.makeRequest<any>(`/admin/${id}/editar_cliente/`, options);
+    const clienteData = await elibrosApi.makeRequest<RawClienteData>(`/admin/${id}/editar_cliente/`, options);
     return this.mapClienteData(clienteData);
   }
 

@@ -144,7 +144,7 @@ interface ClienteEditModalProps {
   isOpen: boolean;
   onClose: () => void;
   cliente?: Cliente;
-  onSave: (id: number, data: any) => Promise<boolean>;
+  onSave: (id: number, data: FormData | Record<string, unknown>) => Promise<boolean>;
 }
 
 function ClienteEditModal({ isOpen, onClose, cliente, onSave }: ClienteEditModalProps) {
@@ -262,7 +262,7 @@ function ClienteEditModal({ isOpen, onClose, cliente, onSave }: ClienteEditModal
         success = await onSave(cliente.id, formDataToSend);
       } else {
         // Sem arquivo, usar JSON normal
-        const enderecoData: any = {};
+        const enderecoData: Record<string, string | number> = {};
         // Copiar apenas campos válidos do endereço
         Object.entries(formData.endereco).forEach(([key, value]) => {
           // Verificar se o valor é válido (não null, undefined, ou string vazia)

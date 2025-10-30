@@ -1,6 +1,5 @@
 // Hook para carrinho com API apenas para usuários autenticados
 import { useAuth } from '../contexts/AuthContext';
-import { elibrosApi } from '../services/api';
 import { carrinhoApi } from '../services/carrinhoApiService';
 import { ItemCarrinho } from '@/types/itemCarrinho';
 import { Carrinho } from '@/types/carrinho';
