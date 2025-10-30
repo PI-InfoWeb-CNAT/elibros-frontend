@@ -133,7 +133,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const livroFormatado = {
         id: livro.id,
         titulo: livro.titulo,
-        capa: livro.capa || '', // Garantir que capa nunca seja undefined
+        capa_url: livro.capa_url || '', // Garantir que capa_url nunca seja undefined
         preco: livro.preco,
         autores: livro.autores
       };

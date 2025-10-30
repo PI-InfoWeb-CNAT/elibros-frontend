@@ -244,7 +244,7 @@ export default function LivroPage() {
           {/* Imagem do livro */}
           <figure className="flex-shrink-0">
             <Image 
-              {...getImageProps(livro.capa, livro.titulo)}
+              {...getImageProps(livro.capa_url, livro.titulo)}
               width={288}
               height={384}
               className="w-72 h-auto rounded-lg object-cover mx-auto lg:mx-0"

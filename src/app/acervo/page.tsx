@@ -278,7 +278,7 @@ export default function AcervoPage() {
                         {/* Imagem do livro */}
                         <div className="flex-shrink-0 mr-4">
                           <Image
-                            {...getImageProps(livro.capa, livro.titulo)}
+                            {...getImageProps(livro.capa_url, livro.titulo)}
                             width={96}
                             height={160}
                             className="w-24 h-40 rounded object-cover"

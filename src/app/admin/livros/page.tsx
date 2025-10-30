@@ -355,8 +355,8 @@ function LivroModal({ isOpen, onClose, livro, onSuccess }: LivroModalProps) {
       });
 
       // Também atualiza o preview da capa
-      if (livro.capa) {
-        setCapaPreview(livro.capa);
+      if (livro.capa_url) {
+        setCapaPreview(livro.capa_url);
       }
 
       setIsLoadingData(false);
@@ -1729,9 +1729,9 @@ export default function LivrosAdminPage() {
                 {/* Coluna direita: Capa */}
                 <div className="flex justify-center md:justify-end md:items-start">
                   <div className="w-40 h-52 bg-gray-100 rounded-lg overflow-hidden border border-gray-200">
-                    {viewModal.livro.capa ? (
+                    {viewModal.livro.capa_url ? (
                       <img
-                        src={viewModal.livro.capa}
+                        src={viewModal.livro.capa_url}
                         alt={`Capa do livro ${viewModal.livro.titulo}`}
                         className="w-full h-full object-cover"
                         onError={(e) => {

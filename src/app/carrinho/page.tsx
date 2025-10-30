@@ -270,7 +270,7 @@ export default function CarrinhoPage() {
                       {/* Book Image */}
                       <figure className="flex-shrink-0">
                         <Image 
-                          {...getImageProps(item.livro.capa, item.livro.titulo)}
+                          {...getImageProps(item.livro.capa_url, item.livro.titulo)}
                           width={160}
                           height={240}
                           className="w-40 h-auto rounded"

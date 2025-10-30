@@ -3,7 +3,7 @@ export interface ItemCarrinho {
   livro: {
     id: number;
     titulo: string;
-    capa: string;
+    capa_url?: string;
     preco: string;
     autores: string[];
   };

@@ -5,7 +5,7 @@ export interface Livro {
   sinopse?: string;
   editora: string;
   ISBN?: string;
-  capa?: string;
+  capa_url?: string;
   data_de_publicacao?: string; // Matches Django serializer field
   ano_de_publicacao?: number;
   preco: string;

@@ -171,7 +171,7 @@ export default function BooksCarousel({
                     {/* Imagem à esquerda com tamanho fixo */}
                     <a href={`/livro/${book.id}`} className="flex-shrink-0 mr-4">
                       <Image 
-                        {...getImageProps(book.capa, book.titulo)}
+                        {...getImageProps(book.capa_url, book.titulo)}
                         width={128}
                         height={192}
                         className="rounded object-cover"
